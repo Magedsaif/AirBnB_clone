@@ -3,6 +3,7 @@
 
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -19,12 +20,13 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new()
         else:
             for k, v in kwargs.items():
-                if k is not "__class__":
-                    if k is "updated_at":
+                if k != "__class__":
+                    if k == "updated_at":
                         self.updated_at = datetime.fromisoformat(v)
-                    elif k is "created_at":
+                    elif k == "created_at":
                         self.created_at = datetime.fromisoformat(v)
                     else:
                         setattr(self, k, v)
@@ -41,6 +43,7 @@ class BaseModel:
         update atr updated_at
         """
         self.updated_at = datetime.now()
+        storage()
 
     def to_dict(self):
         """
@@ -51,4 +54,3 @@ class BaseModel:
         my_class_dict["updated_at"] = self.updated_at.isoformat()
         my_class_dict["created_at"] = self.created_at.isoformat()
         return my_class_dict
-
