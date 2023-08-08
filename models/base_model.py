@@ -37,7 +37,7 @@ class BaseModel:
 
         return string Representation.
         """
-        return f"[{__class__.__name__}] ({self.id}) <{self.__dict__}>"
+        return f"[{self.__class__.__name__}] ({self.id}) <{self.__dict__}>"
 
     def save(self):
         """save.
@@ -53,8 +53,9 @@ class BaseModel:
         Returns:
             dict: dictionary representation.
         """
-        my_class_dict = self.__dict__
+        my_class_dict = self.__dict__.copy()
         my_class_dict["__class__"] = __class__.__name__
         my_class_dict["updated_at"] = self.updated_at.isoformat()
         my_class_dict["created_at"] = self.created_at.isoformat()
         return my_class_dict
+    
