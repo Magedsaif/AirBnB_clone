@@ -94,6 +94,39 @@ class HBNBCommand(cmd.Cmd):
             objects_string_representation.append(myclass.__str__())
         print(objects_string_representation)
 
+    def do_update(self, line):
+        #             0         1         2                 3
+        # update <class name> <id> <attribute name> "<attribute value>"
+        line_vector = line.split()
+        v_len = len(line_vector)
+        if line_vector == []:
+            print("** class name missing **")
+
+        elif line_vector[0] not in self.classes_dict:
+            print("** class doesn't exist **")
+        elif v_len < 2:
+            print("** instance id missing **")
+        else:
+            myobjects = storage.all()
+            my_dict_object = myobjects.get(
+                line_vector[0] + "." + line_vector[1])
+            if my_dict_object is None:
+                print("** no instance found **")
+            elif v_len < 3:
+                print("** attribute name missing **")
+            elif v_len < 4:
+                print("** value missing **")
+            else:
+                myclass = eval(line_vector[0] + "(**my_dict_object)")
+                setattr(myclass, line_vector[2], line_vector[3])  
+                my_dict_object[line_vector[0] + "." + line_vector[1]] = myclass.to_dict()
+                myclass.save()
+                print(myobjects)
+                print("\n\n\n")
+                print(myclass)
+                print("\n\n\n")
+                print("saved")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
