@@ -14,13 +14,17 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        self.__objects [obj.get("__class__") + "." + obj.get("id")] = obj
+        myobj_to_dict = obj.to_dict()
+        self.__objects[myobj_to_dict["__class__"] +
+                       "." + myobj_to_dict["id"]] = myobj_to_dict
 
     def save(self):
-        with open (self.__file_path,"w+") as f:
+        with open(self.__file_path, "w+") as f:
             dump(self.__objects, f)
 
     def reload(self):
-        with open (self.__file_path,"r") as f:
-            self.__objects = load(f)
-
+        try:
+            with open(self.__file_path, "r") as f:
+                self.__objects = load(f)
+        except FileNotFoundError:
+            pass

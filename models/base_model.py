@@ -21,7 +21,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new()
+            storage.new(self)
         else:
             for k, v in kwargs.items():
                 if k != "__class__":
@@ -44,8 +44,8 @@ class BaseModel:
 
         update atr updated_at
         """
+        storage.save()
         self.updated_at = datetime.now()
-        storage()
 
     def to_dict(self):
         """To_dict.
