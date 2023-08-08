@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" this is the base model"""
+"""this is the base model."""
 
 from uuid import uuid4
 from datetime import datetime
@@ -7,14 +7,15 @@ from models import storage
 
 
 class BaseModel:
-    """BaseModel class"""
+    """BaseModel class."""
 
     def __init__(self, *args, **kwargs):
-        """__init__
-        args:
-        id
-        created_at
-        updated_at
+        """Instance Constructor.
+
+        args
+        id:unique identifier.
+        created_at: date created at.
+        updated_at: date updated at.
         """
         if not kwargs:
             self.id = str(uuid4())
@@ -32,22 +33,25 @@ class BaseModel:
                         setattr(self, k, v)
 
     def __str__(self):
-        """__str__
-        return string represantion
+        """__str__.
+
+        return string Representation.
         """
         return f"[{__class__.__name__}] ({self.id}) <{self.__dict__}>"
 
     def save(self):
-        """
-        save
+        """save.
+
         update atr updated_at
         """
         self.updated_at = datetime.now()
         storage()
 
     def to_dict(self):
-        """
-        dict represantion
+        """To_dict.
+
+        Returns:
+            dict: dictionary representation.
         """
         my_class_dict = self.__dict__
         my_class_dict["__class__"] = __class__.__name__
