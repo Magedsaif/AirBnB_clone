@@ -82,10 +82,7 @@ class HBNBCommand(cmd.Cmd):
         for o_key, o_value in myobjects.items():
             calss_name = o_key.split(".")[0]
             if class_to_represent is not None:
-                print(f"class name {calss_name}")
-                print(f"class_to_represent {class_to_represent}")
                 if calss_name == class_to_represent:
-
                     myclass = eval(calss_name + "(**o_value)")
                 else:
                     continue
@@ -95,37 +92,29 @@ class HBNBCommand(cmd.Cmd):
         print(objects_string_representation)
 
     def do_update(self, line):
-        #             0         1         2                 3
-        # update <class name> <id> <attribute name> "<attribute value>"
         line_vector = line.split()
-        v_len = len(line_vector)
+        vector_len = len(line_vector)
         if line_vector == []:
             print("** class name missing **")
 
         elif line_vector[0] not in self.classes_dict:
             print("** class doesn't exist **")
-        elif v_len < 2:
+        elif vector_len < 2:
             print("** instance id missing **")
         else:
-            myobjects = storage.all()
-            my_dict_object = myobjects.get(
-                line_vector[0] + "." + line_vector[1])
-            if my_dict_object is None:
+            objects_dict = storage.all()
+            object_key = line_vector[0] + "." + line_vector[1]
+            if object_key not in objects_dict:
                 print("** no instance found **")
-            elif v_len < 3:
+            elif vector_len < 3:
                 print("** attribute name missing **")
-            elif v_len < 4:
+            elif vector_len < 4:
                 print("** value missing **")
             else:
-                myclass = eval(line_vector[0] + "(**my_dict_object)")
-                setattr(myclass, line_vector[2], line_vector[3])  
-                my_dict_object[line_vector[0] + "." + line_vector[1]] = myclass.to_dict()
-                myclass.save()
-                print(myobjects)
-                print("\n\n\n")
-                print(myclass)
-                print("\n\n\n")
-                print("saved")
+                object_class = eval(line_vector[0] + "(**objects_dict[object_key])")
+                setattr(object_class, line_vector[2],  eval(line_vector[3]))  
+                objects_dict[object_key] = object_class.to_dict()
+                object_class.save()
 
 
 if __name__ == '__main__':
