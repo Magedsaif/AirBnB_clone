@@ -3,6 +3,7 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -92,6 +93,7 @@ class HBNBCommand(cmd.Cmd):
         print(objects_string_representation)
 
     def do_update(self, line):
+        # TODO dont update create id
         line_vector = line.split()
         vector_len = len(line_vector)
         if line_vector == []:
@@ -111,8 +113,9 @@ class HBNBCommand(cmd.Cmd):
             elif vector_len < 4:
                 print("** value missing **")
             else:
-                object_class = eval(line_vector[0] + "(**objects_dict[object_key])")
-                setattr(object_class, line_vector[2],  eval(line_vector[3]))  
+                object_class = eval(
+                    line_vector[0] + "(**objects_dict[object_key])")
+                setattr(object_class, line_vector[2],  eval(line_vector[3]))
                 objects_dict[object_key] = object_class.to_dict()
                 object_class.save()
 
