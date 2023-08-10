@@ -6,12 +6,13 @@ from models.base_model import BaseModel
 class Amenity(BaseModel):
     """amenity class."""
 
+    name = ""
+
     def __init__(self, *args, **kwargs):
         """Instance Constructor.
 
         args
         name : string amenity name
         """
-        if not kwargs:
-            self.name = ""
+
         super().__init__(*args, **kwargs)

@@ -6,6 +6,11 @@ from models.base_model import BaseModel
 class User(BaseModel):
     """user class."""
 
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
+
     def __init__(self, *args, **kwargs):
         """Instance Constructor.
 
@@ -15,9 +20,4 @@ class User(BaseModel):
         first_name: string user first_name
         last_name: string user last_name
         """
-        if not kwargs:
-            self.email = ""
-            self.password = ""
-            self.first_name = ""
-            self.last_name = ""
         super().__init__(*args, **kwargs)

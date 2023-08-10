@@ -6,6 +6,9 @@ from models.base_model import BaseModel
 class Review(BaseModel):
     """review class."""
 
+    place_id = ""  # Place.id
+    user_id = ""  # User.id
+    text = ""
     def __init__(self, *args, **kwargs):
         """Instance Constructor.
 
@@ -13,8 +16,5 @@ class Review(BaseModel):
         name : string review email
         """
 
-        if not kwargs:
-            self.place_id = ""  # Place.id
-            self.user_id = ""  # User.id
-            self.text = ""
+
         super().__init__(*args, **kwargs)
