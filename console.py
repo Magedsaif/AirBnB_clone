@@ -1,31 +1,33 @@
 #!/usr/bin/python3
-"""Console module"""
+"""Console module."""
 
 import cmd
 from models.base_model import BaseModel
-from models.user import User
 from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    command interprater class
-    """
+    """command interpreter class."""
+
     prompt = '(hbnb) '
     classes_dict = {"BaseModel": BaseModel}
 
     def do_EOF(self, line):
-        """EOF command to exit the program"""
+        """EOF command to exit the program."""
         return True
 
     def do_quit(self, line):
-        """Quit command to exit the program"""
+        """Quit command to exit the program."""
         return True
 
     def emptyline(self):
+        """Empty line."""
         pass
 
     def do_create(self, line):
+        """Creates a new instance of BaseModel, saves it
+        (to the JSON file) and prints the id
+        """
         if line == "":
             print("** class name missing **")
         else:
@@ -37,6 +39,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_show(self, line):
+        """Print the string representation of an instance
+        based on the class name and id."""
         line_vactor = line.split()
 
         if line_vactor == []:
@@ -54,6 +58,9 @@ class HBNBCommand(cmd.Cmd):
             print(myclass)
 
     def do_destroy(self, line):
+        """Delete an instance based on the class name and id.
+        (save the change into the JSON file).
+        """
         line_vactor = line.split()
         if line_vactor == []:
             print("** class name missing **")
@@ -69,6 +76,9 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, line):
+        """Print all string representation of all instances
+        based or not on the class name.
+        """
         line_vactor = line.split()
 
         objects_string_representation = []
@@ -93,6 +103,9 @@ class HBNBCommand(cmd.Cmd):
         print(objects_string_representation)
 
     def do_update(self, line):
+        """Updates an instance based on the class name and id by adding
+        or updating attribute (save the change into the JSON file).
+        """
         # TODO dont update create id
         line_vector = line.split()
         vector_len = len(line_vector)
