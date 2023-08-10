@@ -12,6 +12,6 @@ class State(BaseModel):
         args
         name : string state email
         """
-        super().__init__()
-        self.name = ""
-    
+        if not kwargs:
+            self.name = ""
+        super().__init__(*args, **kwargs)

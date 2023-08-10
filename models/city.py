@@ -13,6 +13,8 @@ class City(BaseModel):
         name : string city name
         state_id : string State.id
         """
-        super().__init__()
-        self.state_id = ""  # State.id
-        self.name = ""
+        if not kwargs:
+            self.state_id = ""  # State.id
+            self.name = ""
+        super().__init__(*args, **kwargs)
+        

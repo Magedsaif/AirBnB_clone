@@ -12,7 +12,9 @@ class Review(BaseModel):
         args
         name : string review email
         """
-        super().__init__()
-        self.place_id = ""  # Place.id
-        self.user_id = ""  # User.id
-        self.text = ""
+
+        if not kwargs:
+            self.place_id = ""  # Place.id
+            self.user_id = ""  # User.id
+            self.text = ""
+        super().__init__(*args, **kwargs)

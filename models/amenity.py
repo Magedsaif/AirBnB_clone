@@ -12,5 +12,6 @@ class Amenity(BaseModel):
         args
         name : string amenity name
         """
-        super().__init__()
-        self.name = ""
+        if not kwargs:
+            self.name = ""
+        super().__init__(*args, **kwargs)
