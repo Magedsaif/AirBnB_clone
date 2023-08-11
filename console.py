@@ -58,6 +58,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(line_vactor) != 2:
             print("** instance id missing **")
+            return
         myobjects = storage.all()
         returned_object = myobjects.get(line_vactor[0] + "." + line_vactor[1])
         if returned_object is None:
