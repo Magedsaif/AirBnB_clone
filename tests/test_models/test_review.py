@@ -90,5 +90,6 @@ class TestConstructor(unittest.TestCase):
 
             check for string representaion
         """
-        expected_str = f"[{self.review.__class__.__name__}] ({self.review.id}) <{self.review.__dict__}>"
+        n = self.review.__class__.__name__
+        expected_str = f"[{n}] ({self.review.id}) <{self.review.__dict__}>"
         self.assertEqual(self.review.__str__(), expected_str)

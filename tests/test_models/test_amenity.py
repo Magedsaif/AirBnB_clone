@@ -25,7 +25,7 @@ class TestConstructor(unittest.TestCase):
         self.assertIsInstance(self.amenity.id, str)
         self.assertIsInstance(self.amenity.created_at, datetime)
         self.assertIsInstance(self.amenity.updated_at, datetime)
-        
+
         self.assertEqual(self.amenity.name, "Ali")
         self.assertEqual(self.amenity.id, "123-123-123")
 
@@ -65,7 +65,8 @@ class TestConstructor(unittest.TestCase):
         after_update_time = self.amenity.updated_at
         self.assertNotEqual(before_update_time, after_update_time)
         all_objects = storage.all()
-        new_number = all_objects[self.amenity.__class__.__name__ + "." + self.amenity.id]["name"]
+        new_number = all_objects[self.amenity.__class__.__name__ +
+                                 "." + self.amenity.id]["name"]
         self.assertEqual(new_number, "Emad")
 
     def test_str(self):
@@ -74,5 +75,7 @@ class TestConstructor(unittest.TestCase):
 
             check for string representaion
         """
-        expected_str = f"[{self.amenity.__class__.__name__}] ({self.amenity.id}) <{self.amenity.__dict__}>"
+        n = self.amenity.__class__.__name__
+
+        expected_str = f"[{n}] ({self.amenity.id}) <{self.amenity.__dict__}>"
         self.assertEqual(self.amenity.__str__(), expected_str)

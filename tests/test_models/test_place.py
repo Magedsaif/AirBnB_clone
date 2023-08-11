@@ -113,7 +113,6 @@ class TestConstructor(unittest.TestCase):
         self.assertEqual(new_place.longitude, -118.2437)
         self.assertEqual(new_place.amenity_ids, ["amenity-3", "amenity-4"])
 
-
     def test_to_dict(self):
         """
             test to_dict class method
@@ -135,7 +134,8 @@ class TestConstructor(unittest.TestCase):
         after_update_time = self.place.updated_at
         self.assertNotEqual(before_update_time, after_update_time)
         all_objects = storage.all()
-        new_number = all_objects[self.place.__class__.__name__ + "." + self.place.id]["name"]
+        new_number = all_objects[self.place.__class__.__name__ +
+                                 "." + self.place.id]["name"]
         self.assertEqual(new_number, "Emad")
 
     def test_str(self):
@@ -144,5 +144,6 @@ class TestConstructor(unittest.TestCase):
 
             check for string representaion
         """
-        expected_str = f"[{self.place.__class__.__name__}] ({self.place.id}) <{self.place.__dict__}>"
+        n = self.place.__class__.__name__
+        expected_str = f"[{n}] ({self.place.id}) <{self.place.__dict__}>"
         self.assertEqual(self.place.__str__(), expected_str)

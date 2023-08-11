@@ -50,6 +50,7 @@ class TestConstructor(unittest.TestCase):
         self.assertEqual(new_city.name, "Emad")
         self.assertEqual(new_city.__dict__["name"], "Emad")
         self.assertEqual(new_city.__dict__["state_id"], "123-122")
+
     def test_to_dict(self):
         """
             test to_dict class method
@@ -71,7 +72,8 @@ class TestConstructor(unittest.TestCase):
         after_update_time = self.city.updated_at
         self.assertNotEqual(before_update_time, after_update_time)
         all_objects = storage.all()
-        new_number = all_objects[self.city.__class__.__name__ + "." + self.city.id]["name"]
+        new_number = all_objects[self.city.__class__.__name__ +
+                                 "." + self.city.id]["name"]
         self.assertEqual(new_number, "Body")
 
     def test_str(self):
@@ -80,5 +82,6 @@ class TestConstructor(unittest.TestCase):
 
             check for string representaion
         """
-        expected_str = f"[{self.city.__class__.__name__}] ({self.city.id}) <{self.city.__dict__}>"
+        n = self.city.__class__.__name__
+        expected_str = f"[{n}] ({self.city.id}) <{self.city.__dict__}>"
         self.assertEqual(self.city.__str__(), expected_str)
