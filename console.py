@@ -74,6 +74,7 @@ class HBNBCommand(cmd.Cmd):
         line_vactor = line.split()
         if line_vactor == []:
             print("** class name missing **")
+            return
         elif self.classes_dict.get(line_vactor[0]) is None:
             print("** class doesn't exist **")
         elif len(line_vactor) != 2:
