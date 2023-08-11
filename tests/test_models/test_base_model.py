@@ -3,10 +3,11 @@
 """
 import unittest
 from models.base_model import BaseModel
+from models import storage
 from datetime import datetime
 
 
-class TestConstructor(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     """
     test class for the max_integer() function.
     """
@@ -54,14 +55,16 @@ class TestConstructor(unittest.TestCase):
     def test_save(self):
         """"
             test save class method
-
-            TODO test storage.save()
         """
         before_update_time = self.base.updated_at
+        self.base.my_number = 90
         self.base.save()
         after_update_time = self.base.updated_at
         self.assertNotEqual(before_update_time, after_update_time)
-
+        all_objects = storage.all()
+        new_number = all_objects[self.base.__class__.__name__ +
+                                 "." + self.base.id]["my_number"]
+        self.assertEqual(new_number, 90)
 
     def test_str(self):
         """
@@ -69,5 +72,6 @@ class TestConstructor(unittest.TestCase):
 
             check for string representaion
         """
-        expected_str = f"[{self.base.__class__.__name__}] ({self.base.id}) <{self.base.__dict__}>"
+        n = self.base.__class__.__name__
+        expected_str = f"[{n}] ({self.base.id}) <{self.base.__dict__}>"
         self.assertEqual(self.base.__str__(), expected_str)

@@ -13,13 +13,13 @@ from models.review import Review
 from models import storage
 
 
-
 class HBNBCommand(cmd.Cmd):
     """command interpreter class."""
 
     prompt = '(hbnb) '
     classes_dict = {"BaseModel": BaseModel, "State": State, "State": State,
-                    "City": City, "Amenity": Amenity, "Place": Place, "Review": Review, "User": User}
+                    "City": City, "Amenity": Amenity,
+                    "Place": Place, "Review": Review, "User": User}
 
     def do_EOF(self, line):
         """EOF command to exit the program."""
@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
                 myclass = eval(line + "()")
                 myclass.save()
                 print(myclass.id)
-            except:
+            except Exception as e:
                 print("** class doesn't exist **")
 
     def do_show(self, line):
