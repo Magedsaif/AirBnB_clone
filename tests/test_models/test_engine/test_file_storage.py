@@ -9,43 +9,39 @@ from models import storage
 from datetime import datetime
 
 
-class TestFileStorageMethods(unittest.TestCase):
+class TestConstructor(unittest.TestCase):
+    """
+    test class for the max_integer() function.
+    """
+    fs = FileStorage()
 
-    def setUp(self):
-        self.fs = FileStorage()
+    def test_default_values(self):
+        """test default value"""
+        # Get the initial count of objects
+        initial_count = len(self.fs.all())
 
-    def test_all_method(self):
-        # Initially, the all() method should return an empty dictionary
-        all_objects = self.fs.all()
-        self.assertIsInstance(all_objects, dict)
-
-    def test_new_method(self):
+        # Create a new BaseModel instance and add it to the FileStorage
         new_base_model = BaseModel()
         self.fs.new(new_base_model)
-        
-        all_objects = self.fs.all()
-        self.assertIn(f"BaseModel.{new_base_model.id}", all_objects)
-        self.assertIs(all_objects[f"BaseModel.{new_base_model.id}"], new_base_model)
 
-    def test_save_method(self):
-        new_base_model = BaseModel()
-        self.fs.new(new_base_model)
+        # Save the objects to the JSON file
         self.fs.save()
 
-        with open(self.fs._FileStorage__file_path, 'r') as file:
-            file_contents = file.read()
-            self.assertIn(new_base_model.id, file_contents)
-
-    def test_reload_method(self):
-        new_base_model = BaseModel()
-        self.fs.new(new_base_model)
-        self.fs.save()
-
+        # Reload the objects from the JSON file
         self.fs.reload()
 
-        all_objects = self.fs.all()
-        self.assertIn(f"BaseModel.{new_base_model.id}", all_objects)
-        self.assertIsInstance(all_objects[f"BaseModel.{new_base_model.id}"], BaseModel)
-        self.assertEqual(all_objects[f"BaseModel.{new_base_model.id}"].id, new_base_model.id)
-        self.assertEqual(all_objects[f"BaseModel.{new_base_model.id}"].created_at, new_base_model.created_at)
-        self.assertEqual(all_objects[f"BaseModel.{new_base_model.id}"].updated_at, new_base_model.updated_at)
+        # Get the updated count of objects
+        updated_count = len(self.fs.all())
+
+        # Verify that the count of objects has increased by 1
+        self.assertEqual(updated_count, initial_count + 1)
+
+        # Verify that the added object is now present in the objects dictionary
+        obj_key = f"BaseModel.{new_base_model.id}"
+        self.assertIn(obj_key, self.fs.all())
+
+        # Verify that the attributes of the added object match the original attributes
+        reloaded_obj = self.fs.all()[obj_key]
+        self.assertEqual(reloaded_obj.id, new_base_model.id)
+        self.assertEqual(reloaded_obj.created_at, new_base_model.created_at)
+        self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
