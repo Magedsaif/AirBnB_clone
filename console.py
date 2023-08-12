@@ -39,6 +39,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if line == "":
             print("** class name missing **")
+            return
         else:
             try:
                 myclass = eval(line + "()")
@@ -46,6 +47,7 @@ class HBNBCommand(cmd.Cmd):
                 print(myclass.id)
             except Exception as e:
                 print("** class doesn't exist **")
+                return
 
     def do_show(self, line):
         """Print the string representation of an instance
@@ -54,8 +56,10 @@ class HBNBCommand(cmd.Cmd):
 
         if line_vactor == []:
             print("** class name missing **")
+            return
         elif self.classes_dict.get(line_vactor[0]) is None:
             print("** class doesn't exist **")
+            return
         elif len(line_vactor) != 2:
             print("** instance id missing **")
             return
@@ -63,6 +67,7 @@ class HBNBCommand(cmd.Cmd):
         returned_object = myobjects.get(line_vactor[0] + "." + line_vactor[1])
         if returned_object is None:
             print("** no instance found **")
+            return
         else:
             myclass = eval(line_vactor[0] + "(**returned_object)")
             print(myclass)
@@ -77,14 +82,17 @@ class HBNBCommand(cmd.Cmd):
             return
         elif self.classes_dict.get(line_vactor[0]) is None:
             print("** class doesn't exist **")
+            return
         elif len(line_vactor) != 2:
             print("** instance id missing **")
+            return
         myobjects = storage.all()
         try:
             myobjects.pop(line_vactor[0] + "." + line_vactor[1])
             storage.save()
         except KeyError:
             print("** no instance found **")
+            return
 
     def do_all(self, line):
         """Print all string representation of all instances
@@ -122,20 +130,25 @@ class HBNBCommand(cmd.Cmd):
         vector_len = len(line_vector)
         if line_vector == []:
             print("** class name missing **")
-
+            return
         elif line_vector[0] not in self.classes_dict:
             print("** class doesn't exist **")
+            return
         elif vector_len < 2:
             print("** instance id missing **")
+            return
         else:
             objects_dict = storage.all()
             object_key = line_vector[0] + "." + line_vector[1]
             if object_key not in objects_dict:
                 print("** no instance found **")
+                return
             elif vector_len < 3:
                 print("** attribute name missing **")
+                return
             elif vector_len < 4:
                 print("** value missing **")
+                return
             else:
                 object_class = eval(
                     line_vector[0] + "(**objects_dict[object_key])")
