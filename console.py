@@ -32,22 +32,21 @@ class HBNBCommand(cmd.Cmd):
         """Empty line."""
         pass
 
-    def do_create(self, args):
+    def do_create(self, line):
+        """Creates a new instance of BaseModel, saves it
+        (to the JSON file) and prints the id
         """
-        Creates a new instance of a class
-        Usage: create <Class Name>
-        """
-        if not args:
+        if line == "":
             print("** class name missing **")
             return
-        args = args.split()
-        if args[0] not in self.classes_dict:
-            print("** class doesn't exist **")
-            return
-
-        obj = eval(args[0])()  # eval creates an instance
-        obj.save()
-        print(obj.id)
+        else:
+            try:
+                myclass = eval(line + "()")
+                myclass.save()
+                print(myclass.id)
+            except Exception as e:
+                print("** class doesn't exist **")
+                return
 
     def do_show(self, line):
         """Print the string representation of an instance
@@ -89,6 +88,7 @@ class HBNBCommand(cmd.Cmd):
         key = line_vactor[0] + "." + line_vactor[1]
         if key in objects_class.keys():
             objects_class.pop(key)
+            storage.save()
         else:
             print("** no instance found **")
             return
