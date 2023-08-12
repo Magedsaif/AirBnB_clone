@@ -62,7 +62,11 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_vactor) != 2:
             print("** instance id missing **")
             return
-        myobjects = storage.all()
+        objects_class = storage.all()
+        myobjects = {}
+        for key, val in objects_class.items():
+            myobjects[key] = val.to_dict()
+
         returned_object = myobjects.get(line_vactor[0] + "." + line_vactor[1])
         if returned_object is None:
             print("** no instance found **")
@@ -85,7 +89,10 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_vactor) != 2:
             print("** instance id missing **")
             return
-        myobjects = storage.all()
+        objects_class = storage.all()
+        myobjects = {}
+        for key, val in objects_class.items():
+            myobjects[key] = val.to_dict()
         try:
             myobjects.pop(line_vactor[0] + "." + line_vactor[1])
             storage.save()
