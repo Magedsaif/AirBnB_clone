@@ -21,6 +21,4 @@ class TestConstructor(unittest.TestCase):
 
     def test_default_values(self):
         """test default value"""
-        pass
-
         self.assertIsInstance(storage.all(), dict)
