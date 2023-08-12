@@ -3,13 +3,6 @@
 
 from json import dump
 from json import load
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 
 
 class FileStorage:
@@ -20,10 +13,6 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
-
-    def __init__(self):
-        """Init constructor."""
-        pass
 
     def all(self):
         """All.
@@ -39,17 +28,15 @@ class FileStorage:
         Args:
             obj (object): object
         """
-        myobj_to_dict = obj.to_dict()
-        self.__objects[myobj_to_dict["__class__"] +
-                       "." + myobj_to_dict["id"]] = myobj_to_dict
+        self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         """Serialize __objects to the JSON file."""
         json_objs = {}
         for key, val in self.__objects.items():
-            json_objs[key] = val
+            json_objs[key] = val.to_dict()
         with open(self.__file_path, "w+") as f:
-            dump(self.__objects, f)
+            dump(json_objs, f)
 
     def reload(self):
         """Deserialize the JSON file to __objects."""
