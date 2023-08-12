@@ -1,30 +1,11 @@
-#!/usr/bin/python3
-"""
-User Model
------------
-Attributes:
-    email (str): The email address associated with the user.
-    password (str): The user's password.
-    first_name (str): The first name of the user.
-    last_name (str): The last name of the user.
-"""
+#!usr/bin/python3
+
+""" User model """
 from models.base_model import BaseModel
 
 
 class User(BaseModel):
-    """
-    Represents a user in the system.
-
-    Attributes:
-        email (str): The email address associated with the user.
-        password (str): The user's password.
-        first_name (str): The first name of the user.
-        last_name (str): The last name of the user.
-
-    Args:
-        *args: Variable length positional arguments
-        **kwargs: Variable keyword arguments
-    """
+    """ User class """
 
     email = ""
     password = ""
@@ -32,11 +13,5 @@ class User(BaseModel):
     last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """
-        Initialize a new User instance.
-
-        Args:
-            *args: Variable length positional arguments
-            **kwargs: Variable keyword arguments
-        """
+        """init the user class"""
         super().__init__(*args, **kwargs)
