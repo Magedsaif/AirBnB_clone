@@ -15,15 +15,19 @@ class FileStorage():
 
     """
     FileStorage class
-    Usage : implement the functionality of storing objects and retrieving them
-    Cicle : <class 'BaseModel'> -> to_dict() -> <class 'dict'> -> JSON dump ->
-    <class 'str'> ->FILE -> <class 'str'> -> JSON load -> <class 'dict'>
-    -> <class 'BaseModel'
     """
 
     __file_path = "file.json"
     __objects = {}
-
+    __models = {
+        'User': User,
+        'BaseModel': BaseModel,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review
+    }
 
     def all(self):
         """
@@ -33,14 +37,13 @@ class FileStorage():
 
     def new(self, obj):
         """
-        Add new created objects to __objects var to serialize them
-        into json objects using save() later
+        Add obj to objects
         """
         self.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         """"
-        Serialize BaseModel objects in __objects to json objects and
+        Serialize objects in __objects to json objects and
         save them in file.json file format
         """
         json_objs = {}
@@ -51,28 +54,17 @@ class FileStorage():
 
     def reload(self):
         """
-        Deserializes the JSON objects in file.json to a python dictionary
-        format then pass it as a kwargs to BaseModel constructor to convert it
-        BaseModel class representing format
+        Deserializes the JSON objects in file.json
         """
         try:
             with open(self.__file_path, "r", encoding='utf-8') as f:
                 json_objs = json.load(f)
-            models = {
-                'User': User,
-                'BaseModel': BaseModel,
-                'State': State,
-                'City': City,
-                'Amenity': Amenity,
-                'Place': Place,
-                'Review': Review
-            }
+
             for key, val in json_objs.items():
                 constractor = val["__class__"]
-                for model, cls in models.items():
-                    if constractor == model:
-                        self.__objects[key] = cls(**val)
-
+                if val["__class__"] in self.__models.keys():
+                    self.__objects[key] = self.__models[val["__class__"]](
+                        **val)
         except FileNotFoundError:
             pass
         except Exception as e:
