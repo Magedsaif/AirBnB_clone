@@ -3,6 +3,13 @@
 
 from json import dump
 from json import load
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -39,9 +46,30 @@ class FileStorage:
             dump(json_objs, f)
 
     def reload(self):
-        """Deserialize the JSON file to __objects."""
+        """
+        Deserializes the JSON objects in file.json to a python dictionary
+        format then pass it as a kwargs to BaseModel constructor to convert it
+        BaseModel class representing format
+        """
         try:
-            with open(self.__file_path, "r") as f:
-                self.__objects = load(f)
+            with open(self.__file_path, "r", encoding='utf-8') as f:
+                json_objs = json.load(f)
+            models = {
+                'User': User,
+                'BaseModel': BaseModel,
+                'State': State,
+                'City': City,
+                'Amenity': Amenity,
+                'Place': Place,
+                'Review': Review
+            }
+            for key, val in json_objs.items():
+                constractor = val["__class__"]
+                for model, cls in models.items():
+                    if constractor == model:
+                        self.__objects[key] = cls(**val)
+
         except FileNotFoundError:
+            pass
+        except Exception as e:
             pass
