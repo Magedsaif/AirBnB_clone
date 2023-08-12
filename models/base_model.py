@@ -45,7 +45,6 @@ class BaseModel:
         update atr updated_at
         """
         self.updated_at = datetime.now()
-        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
