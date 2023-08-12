@@ -15,11 +15,13 @@ class TestConstructor(unittest.TestCase):
     amenity = Amenity()
     amenity.name = "Ali"
     amenity.id = "123-123-123"
+
     def test_default_values(self):
         """test default value"""
 
         a = Amenity()
         self.assertEqual(a.name, "")
+
     def test_create_instance_without_kwargs(self):
         """
         create an instance of class without kwargs
