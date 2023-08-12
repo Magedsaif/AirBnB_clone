@@ -2,7 +2,6 @@
 """Console module."""
 
 import cmd
-from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
