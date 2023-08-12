@@ -107,7 +107,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
 
-        myobjects = storage.all()
+        objects_class = storage.all()
+        myobjects = {}
+        for key, val in objects_class.items():
+            myobjects[key] = val.to_dict()
         for o_key, o_value in myobjects.items():
             calss_name = o_key.split(".")[0]
             if class_to_represent is not None:
@@ -137,7 +140,11 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         else:
-            objects_dict = storage.all()
+            objects_class = storage.all()
+            objects_dict = {}
+            for key, val in objects_class.items():
+                objects_dict[key] = val.to_dict()
+
             object_key = line_vector[0] + "." + line_vector[1]
             if object_key not in objects_dict:
                 print("** no instance found **")
