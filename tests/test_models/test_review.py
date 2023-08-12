@@ -17,6 +17,14 @@ class TestConstructor(unittest.TestCase):
     review.user_id = "user-456"
     review.text = "A bad place"
 
+    def test_default_values(self):
+        """test default value"""
+
+        r = Review()
+        self.assertEqual(r.place_id, "")
+        self.assertEqual(r.user_id, "")
+        self.assertEqual(r.text, "")
+
     def test_create_instance_without_kwargs(self):
         """
         create an instance of class without kwargs

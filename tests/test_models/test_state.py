@@ -15,6 +15,12 @@ class TestConstructor(unittest.TestCase):
     state = State()
     state.name = "Cairo"
 
+    def test_default_values(self):
+        """test default value"""
+
+        s = State()
+        self.assertEqual(s.name, "")
+
     def test_create_instance_without_kwargs(self):
         """
         create an instance of class without kwargs
