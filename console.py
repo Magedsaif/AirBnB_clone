@@ -52,7 +52,6 @@ class HBNBCommand(cmd.Cmd):
         """Print the string representation of an instance
         based on the class name and id."""
         line_vactor = line.split()
-
         if line_vactor == []:
             print("** class name missing **")
             return
@@ -63,17 +62,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         objects_class = storage.all()
-        myobjects = {}
-        for key, val in objects_class.items():
-            myobjects[key] = val.to_dict()
-
-        returned_object = myobjects.get(line_vactor[0] + "." + line_vactor[1])
-        if returned_object is None:
+        key = line_vactor[0] + "." + line_vactor[1]
+        if key in objects_class.keys():
+            print(objects_class[key].__str__())
+        else:
             print("** no instance found **")
             return
-        else:
-            myclass = eval(line_vactor[0] + "(**returned_object)")
-            print(myclass)
 
     def do_destroy(self, line):
         """Delete an instance based on the class name and id.
@@ -89,14 +83,12 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_vactor) != 2:
             print("** instance id missing **")
             return
+
         objects_class = storage.all()
-        myobjects = {}
-        for key, val in objects_class.items():
-            myobjects[key] = val.to_dict()
-        try:
-            myobjects.pop(line_vactor[0] + "." + line_vactor[1])
-            storage.save()
-        except KeyError:
+        key = line_vactor[0] + "." + line_vactor[1]
+        if key in objects_class.keys():
+            objects_class.pop(key)
+        else:
             print("** no instance found **")
             return
 
@@ -115,26 +107,18 @@ class HBNBCommand(cmd.Cmd):
                 return
 
         objects_class = storage.all()
-        myobjects = {}
-        for key, val in objects_class.items():
-            myobjects[key] = val.to_dict()
-        for o_key, o_value in myobjects.items():
-            calss_name = o_key.split(".")[0]
-            if class_to_represent is not None:
-                if calss_name == class_to_represent:
-                    myclass = eval(calss_name + "(**o_value)")
-                else:
-                    continue
-            else:
-                myclass = eval(calss_name + "(**o_value)")
-            objects_string_representation.append(myclass.__str__())
+        for obj in objects_class.values():
+            if class_to_represent is None:
+                objects_string_representation.append(obj.__str__())
+            elif obj.__class__.__name__ == class_to_represent:
+                objects_string_representation.append(obj.__str__())
+
         print(objects_string_representation)
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
         or updating attribute (save the change into the JSON file).
         """
-        # TODO dont update create id
         line_vector = line.split()
         vector_len = len(line_vector)
         if line_vector == []:
@@ -148,12 +132,9 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             objects_class = storage.all()
-            objects_dict = {}
-            for key, val in objects_class.items():
-                objects_dict[key] = val.to_dict()
+            key = line_vector[0] + "." + line_vector[1]
 
-            object_key = line_vector[0] + "." + line_vector[1]
-            if object_key not in objects_dict:
+            if key not in objects_class.keys():
                 print("** no instance found **")
                 return
             elif vector_len < 3:
@@ -163,11 +144,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
                 return
             else:
-                object_class = eval(
-                    line_vector[0] + "(**objects_dict[object_key])")
-                setattr(object_class, line_vector[2],  eval(line_vector[3]))
-                objects_dict[object_key] = object_class.to_dict()
-                object_class.save()
+                setattr(objects_class[key],
+                        line_vector[2],  eval(line_vector[3]))
+                objects_class[key].save()
 
 
 if __name__ == '__main__':
