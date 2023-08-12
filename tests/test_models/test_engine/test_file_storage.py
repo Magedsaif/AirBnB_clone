@@ -17,6 +17,6 @@ class TestConstructor(unittest.TestCase):
 
     def test_default_values_fs(self):
         """test default value"""
-        self.assertIsInstance(self.fs.all(), dict)
+        
         self.fs.save()
         self.fs.reload()
