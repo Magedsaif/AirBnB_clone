@@ -200,7 +200,7 @@ class HBNBCommand(cmd.Cmd):
                         argument = class_argument + ' ' + id_argument + \
                             ' ' + s[0][1:-1] + ' ' + s[1]
                         HBNBCommand.do_update(self, argument)
-                        if class_argument + ' ' + id_argument not in storage.all().keys():
+                        if class_argument + '.' + id_argument not in storage.all().keys():
                             return
                 else:
                     # If eval fails, use the attribute and value pattern
