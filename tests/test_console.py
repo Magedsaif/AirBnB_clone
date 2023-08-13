@@ -144,27 +144,27 @@ class TestConstructor(unittest.TestCase):
         storage.new(b)
         storage.save()  # Save all the created objects
 
-    # def test_create(self):
-    #     """test create"""
-    #     self.rest_file_storage()
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         HBNBCommand().onecmd("create")
-    #         self.assertEqual("** class name missing **", f.getvalue()[:-1])
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         HBNBCommand().onecmd("create Emad")
-    #         self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         HBNBCommand().onecmd("create Emad")
-    #         self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+    def test_create(self):
+        """test create"""
+        self.rest_file_storage()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create")
+            self.assertEqual("** class name missing **", f.getvalue()[:-1])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create Emad")
+            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create Emad")
+            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
 
-    #     for k in self.__classes_dict.keys():
-    #         with patch('sys.stdout', new=StringIO()) as f:
-    #             HBNBCommand().onecmd(f"create {k}")
-    #             self.assertTrue(f"{k}."+f.getvalue()
-    #                             [:-1] in storage.all().keys())
-    #             self.assertIsInstance(storage.all().get(
-    #                 f"{k}."+f.getvalue()[:-1]), eval(k))
-    #     self.assertTrue(os.path.isfile("file.json"))
+        for k in self.__classes_dict.keys():
+            with patch('sys.stdout', new=StringIO()) as f:
+                HBNBCommand().onecmd(f"create {k}")
+                self.assertTrue(f"{k}."+f.getvalue()
+                                [:-1] in storage.all().keys())
+                self.assertIsInstance(storage.all().get(
+                    f"{k}."+f.getvalue()[:-1]), eval(k))
+        self.assertTrue(os.path.isfile("file.json"))
 
     def test_show(self):
         self.rest_file_storage()
@@ -213,20 +213,51 @@ class TestConstructor(unittest.TestCase):
             self.assertEqual(
                 storage.all()["BaseModel.base_id_333"].__str__(), f.getvalue()[:-1])
 
-    # def test_destroy(self):
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         HBNBCommand().onecmd("destroy")
-    #         self.assertIn("** class name missing **", f.getvalue())
+    def test_destroy(self):
+        self.rest_file_storage()
+        self.create_new_objects()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy")
+            self.assertEqual("** class name missing **", f.getvalue()[:-1])
 
-    #         HBNBCommand().onecmd("destroy Emad")
-    #         self.assertIn("** class doesn't exist **", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy Emad")
+            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
 
-    #         HBNBCommand().onecmd("destroy User")
-    #         self.assertIn("** instance id missing **", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy User")
+            self.assertEqual("** instance id missing **", f.getvalue()[:-1])
 
-    #         HBNBCommand().onecmd("destroy User 3212133")
-    #         self.assertIn("** no instance found **", f.getvalue())
-    #         # TODO destroy class
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("destroy User 3212133")
+            self.assertEqual("** no instance found **", f.getvalue()[:-1])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy User user_id_123")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("User.user_id_123" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy Amenity amenity_id_456")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("Amenity.amenity_id_456" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy State state_id_789")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("State.state_id_789" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy City city_id_101")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("City.city_id_101" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy Place place_id_111")
+            self.assertFalse("Place.place_id_111" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy Review review_id_222")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("Review.review_id_222" in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"destroy BaseModel base_id_333")
+            self.assertEqual("", f.getvalue()[:-1])
+            self.assertFalse("BaseModel.base_id_333" in storage.all().keys())
 
     # def test_all(self):
     #     with patch('sys.stdout', new=StringIO()) as f:
