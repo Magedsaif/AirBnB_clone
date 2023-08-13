@@ -189,7 +189,7 @@ class HBNBCommand(cmd.Cmd):
                 line_vector = line_vector[1].split(')')
                 id_argument = line_vector[0].strip("'\"")
                 argument = class_argument + ' ' + id_argument
-                HBNBCommand.do_destroy(self, argument)  # destroy BaseModel 123
+                HBNBCommand.do_destroy(self, argument)  # destroy BaseModel 12
 
             else:
                 print("*** Unknown syntax: {}".format(line))
