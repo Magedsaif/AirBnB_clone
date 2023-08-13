@@ -73,8 +73,8 @@ class TestConstructor(unittest.TestCase):
         storage._FileStorage__objects = {}
 
     def create_new_objects(self):
-        created_at = "2023-08-13T12:00:00"  # Set appropriate creation timestamp
-        updated_at = "2023-08-13T13:30:00"  # Set appropriate update timestamp
+        created_at = "2023-08-13T12:00:00"
+        updated_at = "2023-08-13T13:30:00"
 
         user_data = {
             "id": "user_id_123",  # Set an appropriate unique ID here
@@ -191,11 +191,13 @@ class TestConstructor(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show Amenity amenity_id_456")
             self.assertEqual(
-                storage.all()["Amenity.amenity_id_456"].__str__(), f.getvalue()[:-1])
+                storage.all()["Amenity.amenity_id_456"].__str__(),
+                f.getvalue()[:-1])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show State state_id_789")
             self.assertEqual(
-                storage.all()["State.state_id_789"].__str__(), f.getvalue()[:-1])
+                storage.all()["State.state_id_789"].__str__(),
+                f.getvalue()[:-1])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show City city_id_101")
             self.assertEqual(
@@ -203,15 +205,18 @@ class TestConstructor(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show Place place_id_111")
             self.assertEqual(
-                storage.all()["Place.place_id_111"].__str__(), f.getvalue()[:-1])
+                storage.all()["Place.place_id_111"].__str__(),
+                f.getvalue()[:-1])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show Review review_id_222")
             self.assertEqual(
-                storage.all()["Review.review_id_222"].__str__(), f.getvalue()[:-1])
+                storage.all()["Review.review_id_222"].__str__(),
+                f.getvalue()[:-1])
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd(f"show BaseModel base_id_333")
             self.assertEqual(
-                storage.all()["BaseModel.base_id_333"].__str__(), f.getvalue()[:-1])
+                storage.all()["BaseModel.base_id_333"].__str__(),
+                f.getvalue()[:-1])
 
     def test_destroy(self):
         self.rest_file_storage()
