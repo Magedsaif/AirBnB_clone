@@ -7,7 +7,7 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
-
+import os
 
 class TestConstructor(unittest.TestCase):
     """
@@ -32,8 +32,6 @@ class TestConstructor(unittest.TestCase):
 
         # Get the updated count of objects
         updated_count = len(self.fs.all())
-        storage.save()
-        self.assertIsInstance(storage, FileStorage)
         # Verify that the count of objects has increased by 1
         self.assertEqual(updated_count, initial_count + 1)
 
@@ -44,3 +42,8 @@ class TestConstructor(unittest.TestCase):
         # Verify that the attributes of the added object match the original attributes
         reloaded_obj = self.fs.all()[obj_key]
         self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
+
+        os.remove("file.json")
+        new_base_model = BaseModel()
+        new_base_model.save()
+        self.assertTrue(os.path.exists("file.json"))
