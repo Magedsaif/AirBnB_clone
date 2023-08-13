@@ -149,6 +149,17 @@ class HBNBCommand(cmd.Cmd):
                         line_vector[2],  eval(line_vector[3]))
                 objects_class[key].save()
 
+    def do_count(self, line):
+        """Display count of instances specified"""
+        if line in HBNBCommand.classes_dict:
+            count = 0
+            for key, objs in storage.all().items():
+                if line in key:
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
+
     def default(self, line):
         """Handle Cmd methods."""
         line_vector = line.split('.')
