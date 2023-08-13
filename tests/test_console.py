@@ -56,6 +56,11 @@ class TestConstructor(unittest.TestCase):
             classes_dict = storage.all()
             self.assertTrue("User."+f.getvalue()[:-1] in storage.all().keys())
 
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_do_create(self, mock_stdout):
+        HBNBCommand().onecmd("create BaseModel")
+        output = mock_stdout.getvalue()
+        self.assertTrue(len(output) == 37)  # Length of UUID
     # def test_show(self):
     #     with patch('sys.stdout', new=StringIO()) as f:
     #         HBNBCommand().onecmd("show")
