@@ -11,8 +11,10 @@ from models import storage
 
 
 class TestConstructor(unittest.TestCase):
+    """test class"""
 
     def test_help_method(self):
+        """test help"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help quit")
             self.assertIn("Quit command to exit the program.", f.getvalue())
@@ -41,6 +43,7 @@ class TestConstructor(unittest.TestCase):
         or updating attribute (save the change into the JSON file).""", f.getvalue())
 
     def test_create(self):
+        """test create"""
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create")
             self.assertEqual("** class name missing **", f.getvalue()[:-1])
@@ -58,6 +61,7 @@ class TestConstructor(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_create(self, mock_stdout):
+        """test create"""
         HBNBCommand().onecmd("create BaseModel")
         output = mock_stdout.getvalue()
         self.assertTrue(len(output) == 37)  # Length of UUID
