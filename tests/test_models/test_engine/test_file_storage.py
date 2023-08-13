@@ -28,8 +28,7 @@ class TestConstructor(unittest.TestCase):
 
         # Save the objects to the JSON file
         self.fs.save()
-        file_path = "file.json"  # Replace with the actual file path
-        self.assertTrue(os.path.exists(file_path))
+        
         # Reload the objects from the JSON file
         self.fs.reload()
 
@@ -48,3 +47,5 @@ class TestConstructor(unittest.TestCase):
         self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
         self.assertEqual(reloaded_obj.id, new_base_model.id)
         
+        file_path = "file.json"  # Replace with the actual file path
+        self.assertTrue(os.path.exists(file_path))
