@@ -187,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
                 line_vector = line_vector[1].split(',')
                 id_argument = line_vector[0].strip("'\"")
                 name_argument = line_vector[1].strip(',')
-                if "{" not in  line:
+                if "{" not in line:
                     value_argument = line_vector[2]
                     name_argument = name_argument.strip(" '\"")
                     value_argument = value_argument.strip(' )')
@@ -203,7 +203,8 @@ class HBNBCommand(cmd.Cmd):
                         argument = class_argument + ' ' + id_argument + \
                             ' ' + s[0][1:-1] + ' ' + s[1]
                         HBNBCommand.do_update(self, argument)
-                        if class_argument + '.' + id_argument not in storage.all().keys():
+                        key = class_argument + '.' + id_argument
+                        if key not in storage.all().keys():
                             return
                 else:
                     # If eval fails, use the attribute and value pattern
