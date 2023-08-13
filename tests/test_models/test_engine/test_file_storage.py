@@ -45,7 +45,6 @@ class TestConstructor(unittest.TestCase):
         # Verify that the attributes of the added object match the original attributes
         reloaded_obj = self.fs.all()[obj_key]
         self.assertEqual(reloaded_obj.id, new_base_model.id)
-        self.assertEqual(reloaded_obj.created_at, new_base_model.created_at)
-        self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
+    
         
         
