@@ -165,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
             line_vector = line_vector[1].split('(')
             command = line_vector[0]
 
-            if command == 'all':  # <class name>.all.
+            if command == 'all':  # <class name>.all
                 HBNBCommand.do_all(self, class_argument)  # all BaseModel
 
             elif command == 'count':  # <class name>.count()
