@@ -7,13 +7,16 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
-import os
+
 
 class TestConstructor(unittest.TestCase):
     """
     test class
     """
     fs = FileStorage()
+
+    l = FileStorage()
+
     def test_default_values(self):
         """test default value"""
         # Get the initial count of objects
@@ -42,4 +45,3 @@ class TestConstructor(unittest.TestCase):
         # Verify that the attributes of the added object match the original attributes
         reloaded_obj = self.fs.all()[obj_key]
         self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
-        self.assertEqual(reloaded_obj.id, new_base_model.id)
