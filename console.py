@@ -149,6 +149,44 @@ class HBNBCommand(cmd.Cmd):
                         line_vector[2],  eval(line_vector[3]))
                 objects_class[key].save()
 
+    def default(self, line):
+        """Handle Cmd methods."""
+        line_vector = line.split('.')
+        class_argument = line_vector[0]
+
+        if line_vector == []:
+            print("*** Unknown syntax: {}".format(line))
+            return
+
+        try:
+            line_vector = line_vector[1].split('(')
+            command = line_vector[0]
+
+            if command == 'all':  # <class name>.all()
+                HBNBCommand.do_all(self, class_argument)  # all BaseModel
+
+            elif command == 'count':  # <class name>.count()
+                HBNBCommand.do_count(self, class_argument)
+
+            elif command == 'show':  # <class name>.show(<id>)
+                line_vector = line_vector[1].split(')')
+                id_argument = line_vector[0].strip("'\"")
+                argument = class_argument + ' ' + id_argument
+                HBNBCommand.do_show(self, argument)  # show BaseModel 123
+
+            elif command == 'destroy':  # <class name>.destroy(<id>)
+                line_vector = line_vector[1].split(')')
+                id_argument = line_vector[0].strip("'\"")
+                argument = class_argument + ' ' + id_argument
+                HBNBCommand.do_destroy(self, argument)  # destroy BaseModel 123
+
+            else:
+                print("*** Unknown syntax: {}".format(line))
+                return
+
+        except IndexError:
+            print("*** Unknown syntax: {}".format(line))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
