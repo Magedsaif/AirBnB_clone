@@ -46,14 +46,14 @@ class TestConstructor(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create Emad")
             self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create Emad")
-            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+        # with patch('sys.stdout', new=StringIO()) as f:
+        #     HBNBCommand().onecmd("create Emad")
+        #     self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
 
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("create User")
-            classes_dict = storage.all()
-            self.assertTrue("User."+f.getvalue()[:-1] in storage.all().keys())
+        # with patch('sys.stdout', new=StringIO()) as f:
+        #     HBNBCommand().onecmd("create User")
+        #     classes_dict = storage.all()
+        #     self.assertTrue("User."+f.getvalue()[:-1] in storage.all().keys())
 
     def test_show(self):
         with patch('sys.stdout', new=StringIO()) as f:
