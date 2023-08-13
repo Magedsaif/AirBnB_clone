@@ -185,7 +185,7 @@ class HBNBCommand(cmd.Cmd):
                 argument = class_argument + ' ' + id_argument
                 HBNBCommand.do_show(self, argument)  # show BaseModel 123
 
-            elif command == 'destroy':  # <class name>.destroy(<id>e
+            elif command == 'destroy':  # <class name>.destroy(<id>
                 line_vector = line_vector[1].split(')')
                 id_argument = line_vector[0].strip("'\"")
                 argument = class_argument + ' ' + id_argument
