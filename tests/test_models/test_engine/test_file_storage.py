@@ -16,12 +16,12 @@ class TestConstructor(unittest.TestCase):
     fs = FileStorage()
 
     l = FileStorage()
-    
+
     def test_default_values(self):
         """test default value"""
         # Get the initial count of objects
         initial_count = len(self.fs.all())
-
+        old_dict = self.fs.all().copy()
         # Create a new BaseModel instance and add it to the FileStorage
         new_base_model = BaseModel()
         self.fs.new(new_base_model)
@@ -45,5 +45,4 @@ class TestConstructor(unittest.TestCase):
         # Verify that the attributes of the added object match the original attributes
         reloaded_obj = self.fs.all()[obj_key]
         self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
-        
-        
+        self.assertNotEqual(old_dict, self.fs.all())
