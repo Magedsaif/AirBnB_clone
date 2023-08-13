@@ -191,6 +191,16 @@ class HBNBCommand(cmd.Cmd):
                 argument = class_argument + ' ' + id_argument
                 HBNBCommand.do_destroy(self, argument)  # destroy BaseModel 122
 
+            elif command == 'update':
+                line_vector = line_vector[1].split(',')
+                id_argument = line_vector[0].strip("'\"")
+                name_argument = line_vector[1].strip(',')
+                value_argument = line_vector[2]
+                name_argument = name_argument.strip(" '\"")
+                value_argument = value_argument.strip(' )')
+                argument = class_argument + ' ' + id_argument + ' ' + name_argument + ' ' + value_argument
+                HBNBCommand.do_update(self, argument)
+
             else:
                 print("*** Unknown syntax: {}".format(line))
                 return
