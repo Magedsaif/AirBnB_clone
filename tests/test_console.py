@@ -68,11 +68,13 @@ class TestConstructor(unittest.TestCase):
         # """, f.getvalue()[:-1])
 
     def rest_file_storage(self):
+        """test create"""
         if os.path.isfile("file.json"):
             os.remove("file.json")
         storage._FileStorage__objects = {}
 
     def create_new_objects(self):
+        """create"""
         created_at = "2023-08-13T12:00:00"
         updated_at = "2023-08-13T13:30:00"
 
@@ -167,6 +169,7 @@ class TestConstructor(unittest.TestCase):
         self.assertTrue(os.path.isfile("file.json"))
 
     def test_show(self):
+        """test create"""
         self.rest_file_storage()
         self.create_new_objects()
         with patch('sys.stdout', new=StringIO()) as f:
@@ -219,6 +222,7 @@ class TestConstructor(unittest.TestCase):
                 f.getvalue()[:-1])
 
     def test_destroy(self):
+        """test create"""
         self.rest_file_storage()
         self.create_new_objects()
         with patch('sys.stdout', new=StringIO()) as f:
@@ -286,3 +290,19 @@ class TestConstructor(unittest.TestCase):
     #         self.assertIn("** no instance found **", f.getvalue())
     #         # create a new user
     #         # TODO destroy class
+
+
+def test_count(self):
+    """test create"""
+    with patch('sys.stdout', new=StringIO()) as f:
+        HBNBCommand().onecmd("count")
+        self.assertEqual("** class name missing **", f.getvalue()[:-1])
+    with patch('sys.stdout', new=StringIO()) as f:
+        HBNBCommand().onecmd("count Emad")
+        self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+    for k in self.__classes_dict.keys():
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd(f"count {k}")
+            expected_count = len([obj for obj in storage.all(
+            ).values() if isinstance(obj, self.__classes_dict[k])])
+            self.assertEqual(str(expected_count), f.getvalue()[:-1])
