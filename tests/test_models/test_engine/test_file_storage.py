@@ -7,7 +7,7 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
-
+import os
 
 class TestConstructor(unittest.TestCase):
     """
@@ -28,7 +28,8 @@ class TestConstructor(unittest.TestCase):
 
         # Save the objects to the JSON file
         self.fs.save()
-
+        file_path = "file.json"  # Replace with the actual file path
+        self.assertTrue(os.path.exists(file_path))
         # Reload the objects from the JSON file
         self.fs.reload()
 
