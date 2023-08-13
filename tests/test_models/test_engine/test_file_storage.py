@@ -15,8 +15,6 @@ class TestConstructor(unittest.TestCase):
     """
     fs = FileStorage()
 
-    l = FileStorage()
-
     def test_default_values(self):
         """test default value"""
         # Get the initial count of objects
@@ -35,6 +33,7 @@ class TestConstructor(unittest.TestCase):
         # Get the updated count of objects
         updated_count = len(self.fs.all())
 
+        self.assertIsInstance(storage, FileStorage)
         # Verify that the count of objects has increased by 1
         self.assertEqual(updated_count, initial_count + 1)
 
