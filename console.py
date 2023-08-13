@@ -190,9 +190,21 @@ class HBNBCommand(cmd.Cmd):
                 value_argument = line_vector[2]
                 name_argument = name_argument.strip(" '\"")
                 value_argument = value_argument.strip(' )')
-                argument = class_argument + ' ' + id_argument + \
-                    ' ' + name_argument + ' ' + value_argument
-                HBNBCommand.do_update(self, argument)
+                if "{" in line:
+                    b1 = line.index('{')
+                    b2 = line.index('}')
+                    value_dict = line[b1 + 1: b2]
+                    value_dict_list = value_dict.split(",")
+                    for s in value_dict_list:
+                        s = s.split(":")
+                        argument = class_argument + ' ' + id_argument + \
+                            ' ' + s[0][1:-1] + ' ' + s[1]
+                        HBNBCommand.do_update(self, argument)
+                else:
+                    # If eval fails, use the attribute and value pattern
+                    argument = class_argument + ' ' + id_argument + \
+                        ' ' + name_argument + ' ' + value_argument
+                    HBNBCommand.do_update(self, argument)
 
             else:
                 print("*** Unknown syntax: {}".format(line))
