@@ -11,10 +11,12 @@ from datetime import datetime
 
 class TestConstructor(unittest.TestCase):
     """
-    test class for the max_integer() function.
+    test class
     """
     fs = FileStorage()
 
+    l = FileStorage()
+    
     def test_default_values(self):
         """test default value"""
         # Get the initial count of objects
@@ -45,3 +47,4 @@ class TestConstructor(unittest.TestCase):
         self.assertEqual(reloaded_obj.id, new_base_model.id)
         self.assertEqual(reloaded_obj.created_at, new_base_model.created_at)
         self.assertEqual(reloaded_obj.updated_at, new_base_model.updated_at)
+        self.assertEqual(self.fs._FileStorage__file_path, "file.json")
