@@ -191,10 +191,12 @@ class HBNBCommand(cmd.Cmd):
                 name_argument = name_argument.strip(" '\"")
                 value_argument = value_argument.strip(' )')
                 if "{" in line:
+
                     b1 = line.index('{')
                     b2 = line.index('}')
-                    value_dict = line[b1 + 1: b2]
+                    value_dict = line[b1 + 1: b2].replace(" ", "")
                     value_dict_list = value_dict.split(",")
+
                     for s in value_dict_list:
                         s = s.split(":")
                         argument = class_argument + ' ' + id_argument + \
