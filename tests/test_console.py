@@ -20,21 +20,41 @@ class TestConstructor(unittest.TestCase):
             HBNBCommand().onecmd("help EOF")
             self.assertIn("EOF command to exit the program.", f.getvalue())
 
+            HBNBCommand().onecmd("help create")
+            self.assertIn("""Creates a new instance of BaseModel, saves it
+        (to the JSON file) and prints the id""", f.getvalue())
+
+            HBNBCommand().onecmd("help show")
+            self.assertIn("""Print the string representation of an instance
+        based on the class name and id.""", f.getvalue())
+
+            HBNBCommand().onecmd("help destroy")
+            self.assertIn("""Delete an instance based on the class name and id.
+        (save the change into the JSON file).""", f.getvalue())
+
+            HBNBCommand().onecmd("help all")
+            self.assertIn("""Print all string representation of all instances
+        based or not on the class name.""", f.getvalue())
+
+            HBNBCommand().onecmd("help update")
+            self.assertIn("""Updates an instance based on the class name and id by adding
+        or updating attribute (save the change into the JSON file).""", f.getvalue())
+
     def test_create(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create")
             self.assertEqual("** class name missing **", f.getvalue()[:-1])
-        # with patch('sys.stdout', new=StringIO()) as f:
-        #     HBNBCommand().onecmd("create Emad")
-        #     self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
-        # with patch('sys.stdout', new=StringIO()) as f:
-        #     HBNBCommand().onecmd("create Emad")
-        #     self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create Emad")
+            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create Emad")
+            self.assertEqual("** class doesn't exist **", f.getvalue()[:-1])
 
-        # with patch('sys.stdout', new=StringIO()) as f:
-        #     HBNBCommand().onecmd("create User")
-        #     classes_dict = storage.all()
-        #     self.assertTrue("User."+f.getvalue()[:-1] in storage.all().keys())
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd("create User")
+            classes_dict = storage.all()
+            self.assertTrue("User."+f.getvalue()[:-1] in storage.all().keys())
 
     # def test_show(self):
     #     with patch('sys.stdout', new=StringIO()) as f:

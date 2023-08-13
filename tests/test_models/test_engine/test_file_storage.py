@@ -32,7 +32,7 @@ class TestConstructor(unittest.TestCase):
 
         # Get the updated count of objects
         updated_count = len(self.fs.all())
-
+        storage.save()
         self.assertIsInstance(storage, FileStorage)
         # Verify that the count of objects has increased by 1
         self.assertEqual(updated_count, initial_count + 1)
